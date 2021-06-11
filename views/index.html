@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Simple Meetings App</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+
+  <body>
+  	<p>Enter a room number. If the room does not exist it will be created.</p>
+    <input type="text" id="roomName" placeholder="room#">
+    <button onclick="location.href='/' + document.getElementById('roomName').value" id="connect">Enter Meeting Room</button>
+
+    <br><br><br>
+    <h4>About</h4>
+    <h4>
+    	This is a simple meeting app created with PeerJS and WebRTC. By using WebRTC's audio and video steaming features along with PeerJS's easy to use p2p connection API, this application allows users to create meeing rooms where many people can join and communicate. Supports audio and video streaming for up to ten people.
+	</h4>
+  </body>
+</html>
