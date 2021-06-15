@@ -22,20 +22,12 @@ function muteRemoteAudio(checkbox) {
   //document.getElementById('remoteVideo').muted = ! (document.getElementById('remoteVideo').muted);
 }
 
-// function remoteVolume(slider) {
-//   // new volume between 0 (softest) and 1 (loudest)
-//   var parent_id = slider.parentNode.parentNode.id;
-//   let children = document.getElementById(parent_id).children;
-//   children[0].volume = slider.value;
-
-//   // document.getElementById('remoteVideo').volume = slider.value;
-// }
-
 function remoteVolume() {
   // new volume between 0 (softest) and 1 (loudest)
   var parent_id = this.parentNode.parentNode.id;
   let children = document.getElementById(parent_id).children;
-  children[0].volume = this.value;
+  console.log(children);
+  children[1].volume = this.value;
   console.log(this.value);
 
   // document.getElementById('remoteVideo').volume = slider.value;
@@ -54,7 +46,6 @@ function endMeeting() {
   }
 
   localVideo.srcObject = null;
-
   socket.disconnect();
   peer.disconnect();
 

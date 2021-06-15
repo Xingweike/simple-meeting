@@ -32,7 +32,7 @@ app.get('/', (req,res)=>{
 
 // keeps requesting faviron.ico
 app.get('/favicon.ico', (req,res)=>{
-  console.log("caught favicon.ico");
+  // console.log("caught favicon.ico");
   return;
 })
 
@@ -42,7 +42,6 @@ app.get('/:roomid', (req,res)=>{
 
   // check for full room
   let numConn = (roomid in room_sizes) ? room_sizes[roomid] : 0;
-  console.log("roomid: " + roomid + " currently has " + numConn + " connections!");
   if (numConn >= MAX_ROOM_SIZE) {
     res.send("Room " + roomid + " is full (Max ten people)");
   } else {
@@ -57,11 +56,10 @@ io.on("connection", (socket) => {
   // after recieving message from client
   socket.on('joinRoom', (id, room) => {
 
-    // Limit on certain number of people in room
+    // check for full room
     let numConn = (room in room_sizes) ? room_sizes[room] : 0;
-    console.log(room + " currently has " + numConn + " participants!");
-
     if (numConn < MAX_ROOM_SIZE) {
+      // Room is not full, user can join successfully!
       console.log("user joined room " + room + " id: " + id);
       if (!(room in room_sizes)) room_sizes[room] = 1;
       else room_sizes[room] += 1;

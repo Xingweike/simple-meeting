@@ -16,8 +16,8 @@ localVideo.muted = true; // mute own audio so no feedback
 var connections = {};
 const callList = [];
 
-
 // NOTE: go to settings and add treat site as secure in chrome for video!!!!
+// see README.md for more details
 
 // PEER.JS and WebRTC -----------------------------------
 const constraints = {
@@ -39,6 +39,8 @@ peer.on('open', (id)=>{
     .then(stream => {
         userStream = stream;
         localVideo.srcObject = stream;
+        // this is to make sure user does not join room before mediastream gets 
+        // the user's mediadevices
         socket.emit("joinRoom" , id , roomID);
     })
     .catch(error => {
@@ -50,7 +52,6 @@ peer.on('open', (id)=>{
 
 // Answer Video/audio calls
 peer.on('call', (call)=>{
-  // timing issue where recieving call before mediastream is set up
   call.answer(userStream); 
   callFunctions(call);
 });
@@ -91,6 +92,7 @@ function callFunctions(call) {
     // Here you'd add it to an HTML video/canvas element.
 
     // issue: stream is being returned twice, see https://github.com/peers/peerjs/issues/609
+    // add to callList and check to make sure we don't append two videos
     if(!callList[call.peer]){
       //remoteVideo.srcObject = stream;
       appendVideoToGrid(tempid, stream); 
@@ -183,6 +185,7 @@ function removeVideoFromGrid(id) {
 <!-- Example of one remote video -->
 
 <div id="4f1d2465-355c-4bc1-9053-38676c0bdd30">
+  <p>useridhere</p>
   <video id="remoteVideo" autoplay></video>
   <div>
     <input type="checkbox" id="muteRemoteAudio" onclick="muteRemoteAudio(this)">
